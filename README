@@ -1,0 +1,2 @@
+With urllib you get easy readline which automatically decodes chunked encoding, but you have to send line endings on the server
+With urllib2 readline doesn't work, it tries to read everything. So you have to use socket and parse chunked encoding. It is not difficult as it sends number of bytes in chunk.  
