@@ -1,17 +1,52 @@
 import urllib2
 
+_UNKNOWN = 'UNKNOWN'
+
+def _read_chunked(self,amt=None):
+  
+  assert self.chunked != _UNKNOWN
+  chunk_left = self.chunk_left
+
+  while True:
+
+      if chunk_left is None:
+
+	  line = self.fp.readline()
+	  i = line.find(';')
+	  if i >= 0:
+	      line = line[:i] # strip chunk-extensions
+	  chunk_left = int(line, 16)
+	  if chunk_left == 0:
+	      break
+
+      yield self._safe_read(chunk_left)
+      
+      # we read the whole chunk, get another
+      self._safe_read(2)      # toss the CRLF at the end of the chunk
+      chunk_left = None
+
+  # read and discard trailer up to the CRLF terminator
+  ### note: we shouldn't have any trailers!
+  while True:
+      line = self.fp.readline()
+      if not line:
+	  # a vanishingly small number of sites EOF without
+	  # sending the trailer
+	  break
+      if line == '\r\n':
+	  break
+
+  # we read everything; close the "file"
+  self.close()
+
+
+urllib2.httplib.HTTPResponse._read_chunked = _read_chunked
+
 opener = urllib2.build_opener(urllib2.ProxyHandler({}))
 urllib2.install_opener( opener )
 
 conn = urllib2.urlopen("http://localhost:2000")
-socket = conn.fp._sock.fp._sock
+http = conn.fp._sock
 
-
-while True:
-  
-  data = socket.recv(4*1024)
-
-  if not data: 
-    exit(0) 
-  
-  print data
+for res in http.read():
+  print res
