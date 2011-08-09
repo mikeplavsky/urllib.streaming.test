@@ -3,4 +3,7 @@ but you have to send line endings on the server.
 
 With urllib2 readline doesn't work, it tries to read everything.
 So you have to use socket and parse chunked encoding. 
-It is not difficult as it sends number of bytes in chunk - described here http://www.jmarshall.com/easy/http/#http1.1c2 
+It is not difficult as it sends number of bytes in chunk - 
+described here http://www.jmarshall.com/easy/http/#http1.1c2 
+
+BTW In node.js all this stuff is done very nicely. Check node.client.js.
