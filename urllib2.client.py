@@ -1,10 +1,7 @@
 import urllib2
 
-_UNKNOWN = 'UNKNOWN'
-
-def _read_chunked(self,amt=None):
+def _read_chunked(self,amt):
   
-  assert self.chunked != _UNKNOWN
   chunk_left = self.chunk_left
 
   while True:
@@ -38,7 +35,6 @@ def _read_chunked(self,amt=None):
 
   # we read everything; close the "file"
   self.close()
-
 
 urllib2.httplib.HTTPResponse._read_chunked = _read_chunked
 
