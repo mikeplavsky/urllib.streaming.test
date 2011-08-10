@@ -8,7 +8,7 @@ var srv = http.createServer(function(req,res) {
 
   setTimeout ( function () {
     res.end( '{name:"Next", building: {room: 500}}' );
-  }, 10000);
+  }, 100);
   
 });
 
