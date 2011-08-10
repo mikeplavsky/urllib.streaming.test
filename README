@@ -1,5 +1,5 @@
 urllib2 doesn't support true reading by chunks. 
-Hower it does support chunked transfer encoding.
+However it does support chunked transfer encoding.
 
 To get reading by chunks use fix_urllib function from
 chunked.py
